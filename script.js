@@ -88,4 +88,4 @@ button.addEventListener(`click`, () => {
     renderComment();
 });
 
-renderComment();
+renderComment(); 
