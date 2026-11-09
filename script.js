@@ -5,9 +5,7 @@
     const inputComment = document.querySelector('.add-form-text');
     const likeButton = document.querySelector('.like-button')
 
-    likeButton.addEventListener("click", () => {
-        console.log('click');
-    });
+    
 
 
     button.addEventListener("click", () => {
@@ -41,4 +39,11 @@
     inputName.value = "";
     inputComment.value = "";
 
+    
+    });
+    
+    likeButton.forEach((button) => {
+        button.addEventListener("click"() =>{
+            console.log("click");
+        });
     });
