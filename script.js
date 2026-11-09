@@ -3,6 +3,12 @@
     const list = document.querySelector('.comments');
     const inputName = document.querySelector('.add-form-name');
     const inputComment = document.querySelector('.add-form-text');
+    const likeButton = document.querySelector('.like-button')
+
+    likeButton.addEventListener("click", () => {
+        console.log('click');
+    });
+
 
     button.addEventListener("click", () => {
 
