@@ -21,6 +21,38 @@ const list = document.querySelector('.comments');
 const inputName = document.querySelector('.add-form-name');
 const inputComment = document.querySelector('.add-form-text');
 
+const sanitizeHTML = (str) => {
+    return str.replace(/[&<>"']/g, (char) => {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }
+        return map[char];
+    });
+}
+
+const initShowTextListeners = () => {
+    const elementTextComments = document.querySelectorAll(".comment")
+
+    for (const elementTextComment of elementTextComments) {
+        elementTextComment.addEventListener("click", () => {
+
+            const index = elementTextComment.dataset.index;
+            const comment = commentsData[index];
+
+            if (comment) {
+                inputComment.value = `@${comment.name}`
+                inputComment.focus();
+            }
+
+        });
+    }
+
+}
+
 // функция рендэра
 const renderComment = () => {
     list.innerHTML = "";
@@ -29,17 +61,18 @@ const renderComment = () => {
     commentsData.forEach((comment, index) => {
         const li = document.createElement(`li`);
         li.className = `comment`;
+        li.dataset.index = index;
 
 //Тернарная проверка для проверки класса
         const likeClass = comment.isLiked ? "like-button active-like" : "like-button";
 
         li.innerHTML = `
-        <div class="comment-header">
-            <div>${comment.name}</div>
+        <div class="comment-header" data-index="${index}">
+            <div>${sanitizeHTML(comment.name)}</div>
             <div>${comment.data}</div>
         </div>
         <div class="comment-body">
-            <div class="comment-text">${comment.text}</div>
+            <div class="comment-text">${sanitizeHTML(comment.text)}</div>
         </div>
         <div class="comment-footer">
             <div class="likes">
@@ -50,11 +83,14 @@ const renderComment = () => {
         `
         list.appendChild(li);
     });
-
+initShowTextListeners();
 }
 
 list.addEventListener("click", (event) => {
+    event.stopPropagation();
     const likeButton = event.target.closest('.like-button');
+
+    if (!likeButton) return; 
     
     const index = likeButton.dataset.index;
 
@@ -88,4 +124,4 @@ button.addEventListener(`click`, () => {
     renderComment();
 });
 
-renderComment(); 
+renderComment();
