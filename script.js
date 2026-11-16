@@ -44,6 +44,7 @@ const initShowTextListeners = () => {
             const comment = commentsData[index];
 
             if (comment) {
+                if (event.target.closest('.like-button')) return;
                 inputComment.value = `@${comment.name}`
                 inputComment.focus();
             }
